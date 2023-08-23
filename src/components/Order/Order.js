@@ -1,35 +1,14 @@
-import { useState } from 'react';
-import OrderItem from '../OrderItem/OrderItem';
-import { removeFromOrder } from '../../helpers/orderHelpers';
-import './Order.css';
+import OrderItem from "../OrderItem/OrderItem";
+import "./Order.css";
 
-const Order = ({ items }) => {
-  const [order, setOrder] = useState({});
-
-  const handleRemoveFromOrder = (id) => {
-    const updatedOrder = removeFromOrder(order, id);
-    setOrder(updatedOrder);
-  };
-
-  const orderItems = items
-    .filter((item) => Boolean(order[item.id]))
-    .map((item) => ({
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      quantity: order[item.id],
-    }));
-
+const Order = ({ handleRemoveFromOrder, orderItems }) => {
   const renderContent = () => {
     if (!orderItems.length) {
       return <p>Choose something yummy</p>;
     }
+
     return orderItems.map((item) => (
-      <OrderItem
-        key={item.id}
-        item={item}
-        onClick={() => handleRemoveFromOrder(item.id)}
-      />
+      <OrderItem key={item.id} item={item} onClick={() => handleRemoveFromOrder(item.id)} />
     ));
   };
   return (

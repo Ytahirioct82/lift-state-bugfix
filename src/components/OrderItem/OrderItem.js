@@ -1,7 +1,8 @@
-import './OrderItem.css';
+import "./OrderItem.css";
 
 const OrderItem = ({ item, onClick }) => {
   const { name, price, quantity } = item;
+
   return (
     <div className="OrderItem">
       <h3>{name}</h3>

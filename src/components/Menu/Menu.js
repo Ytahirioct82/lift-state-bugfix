@@ -1,20 +1,30 @@
-import Items from '../Items/Items';
-import SearchBar from '../SearchBar/SearchBar';
-import './Menu.css';
+import Items from "../Items/Items";
+import SearchBar from "../SearchBar/SearchBar";
+import { useState } from "react";
+import "./Menu.css";
 
-const Menu = ({ filteredItems, items, order, setOrder, setFilteredItems }) => {
+const Menu = ({ items, handleAddToOrder }) => {
+  const [query, setQuery] = useState("");
+
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const filteredItems = items.filter((item) => {
+    return item.name.toLowerCase().includes(query.toLowerCase());
+  });
 
   const renderContent = () => {
     if (!filteredItems.length) {
       return <div className="Menu__no-content">No items found!</div>;
     }
 
-    return <Items items={filteredItems} order={order} setOrder={setOrder} />;
-  }
+    return <Items handleAddToOrder={handleAddToOrder} items={filteredItems} />;
+  };
 
   return (
     <div className="Menu">
-      <SearchBar items={items} setFilteredItems={setFilteredItems} />
+      <SearchBar onChange={handleChange} value={query} />
       {renderContent()}
     </div>
   );
